@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Note - Make notes</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <div class="mt-2 max-w-2xl ml-40 ">
+      <input
+        type="text"
+        id="searchInput"
+        oninput="searchNotes()"
+        placeholder="Search notes..."
+        class="outline-none shadow-md p-3 rounded-lg bg-gray-200 mb-4 w-full"
+      />
+    </div>
+    <div id="noteBox"></div>
+    <div
+      class="flex flex-col max-w-lg mx-auto shadow-md rounded-lg px-4"
+      id="noteContainer"
+    >
+      <input
+        type="text"
+        name="title"
+        id="title"
+        placeholder="Title"
+        class="outline-none font-bold text-xl mb-2 hidden"
+      />
+      <textarea
+        name="content"
+        id="content"
+        placeholder="Take a note..."
+        class="outline-none text-md resize-none"
+        onfocus="showTitle()"
+      ></textarea>
+    </div>
+
+    <% if (notes && notes.length > 0){%>
+    <div class="flex p-4 max-w-4xl mx-auto gap-3">
+      <% notes.forEach(note => { %>
+      <div class="shadow p-4 rounded-md">
+        <h1 class="font-bold text-xl"><%= note.title %></h1>
+        <p><%= note.content %></p>
+        <button
+          data-id="<%= note.id %>"
+          onclick="removeNotes(this)"
+          class="bg-red-400 hover:bg-red-500 px-2 py-1 rounded text-white mt-2"
+        >
+          Delete
+        </button>
+        <button
+          data-id="<%= note.id %>"
+          onclick="updateNotes(this)"
+          class="bg-blue-400 hover:bg-blue-500 px-2 py-1 rounded text-white mt-2"
+        >
+          Update
+        </button>
+      </div>
+      <% }); %>
+    </div>
+    <% } %>
+
+    <script src="/notes.js"></script>
+  </body>
+</html>
