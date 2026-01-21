@@ -9,6 +9,7 @@ const { requireAuth } = require("./middleware/requireAuth");
 const { requireRole } = require("./middleware/requireRole");
 require("dotenv").config()
 const app = express();
+
 const port = process.env.PORT || 3000;
 
 app.set("view engine", "ejs");
@@ -19,8 +20,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 
-app.use("/", requireAuth, notesRouter);
 app.use("/admin/notes", requireAuth, requireRole, adminRouter);
+app.use("/", requireAuth, notesRouter);
 
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
